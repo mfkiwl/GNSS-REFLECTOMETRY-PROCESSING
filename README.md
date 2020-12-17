@@ -9,6 +9,10 @@ All the contents were developed for the [Passive Remote Sensing Laboratory (RSLa
 
 New versions of this program may be found at [GitHub](https://github.com/oriolcervello/GNSS-REFLECTOMETRY-PROCESSING/) 
 
+Cite: [https://ieeexplore.ieee.org/document/9028131](https://ieeexplore.ieee.org/document/9028131) as:
+
+    O. C. i. Nogues, D. Pascual, R. Onrubia and A. Camps, "Advanced GNSS-R Signals Processing With GPUs,"
+    in IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, vol. 13, pp. 1158-1163, 2020.
 
 ## Installation of CUDA
 
@@ -56,6 +60,7 @@ Also on the PowerShell: (example: 1: input.ASE 2: 4 datalines)
 
 In this file you will need to fill each variable with the argument desired.
 
+    *WRITEWAVEFORM 1 <---Produce de output of the waveform or just the maximums file, 0/1
     *FFTSIZE 32768  <---Size of the FFT, each one is a complex sample
     *NUMOFFFTS 20  <---# of FFT to do simultaneously in one dataline
     *QUANTINCOHAVER 4   <---# of coherent IFFT to averag for the incoherent
@@ -72,13 +77,15 @@ In this file you will need to fill each variable with the argument desired.
     *DDMNUMQUANT 1 <--- Quantity of dopplers to compute in a DDM, 1 for single computation
     *QUANTDATALINES 4  <--- Datalines to compute should be de same as argument 2
 
-Datalines should be following the variables above and should have this format if INTERFEROMETRIC=0 (conventional mode): DataFileName BeginingOfData EndOfData DopplerFreq
+Datalines should be following the variables above and should have this format if INTERFEROMETRIC=0 (conventional mode): DataFileName # BeginingOfData EndOfData DopplerFreq
 
-    *DATALINE datafiles/prn_L1CA_32_100.bin 0 654752 0 datafiles/prn_L1CA_32.bin
+    *DATALINE 1 datafiles/prn_L1CA_32_100.bin 0 654752 0 datafiles/prn_L1CA_32.bin
+
+The 1 just after the DATALINE indicates that all the samples for that line are from that archive. If a dataline have half of the samples at the end of an archive and the other half at the beggining of the following to indicate that it is the same dataline a 2 must be set in both datalines and eachone with its path and samples in that file.
 
 if INTERFEROMETRIC=1 (interferometric mode): DataFileName BeginingOfData EndOfData DopplerFreq RefFileName BeginingOfDataRef
 
-    *DATALINE datafiles/prn_L1CA_32_100.bin 0 654752 0 datafiles/prn_L1CA_32.bin 100
+    *DATALINE 1 datafiles/prn_L1CA_32_100.bin 0 654752 0 datafiles/prn_L1CA_32.bin 100
 
 The length of the Reference will be the same as the Data but we can set an offset, ex: in this line 100. If interferometric the line above * REFFILENAME will be avoided.
 
@@ -102,5 +109,5 @@ There is a ReadMe.md on /results directory explaining the output files and how t
 ## Licence
 You may find it in a specific licence file.
 
-## Contact
+## Credit
 Project developed by Oriol Cervelló.
